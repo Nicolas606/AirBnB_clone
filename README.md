@@ -11,23 +11,31 @@ You can find a command interpeter as the first step of this HBnB project.
 * [Descriptions](#descriptions)  
 * [Examples](#examples)  
 * [Bugs](#bugs)  
-* [Contributors](#contibutors)
+* [Contributors](#contributors)
 * [License & Copyright](#licence-&-copyright)
 
 ## Installation:  
+---  
 
 ## Commands and functions:  
+---  
 
 ## Descriptions:  
+---  
 
 ## Examples:  
+---  
 
 ## Bugs:  
+---  
 
-## Contributors:  
+## Contributors:   
+---  
+
 - Jorge Rodriguez <jrodriguez9510@outlook.com>  
 - Laura Valencia <lauraliliana@gmail.com>
+
+## License & Copyright:  
 ---  
-## License & Copyright  
 © Jorge Rodriguez 2021  
 Licensed under the [MIT Licence](LICENSE)
