@@ -57,8 +57,23 @@ This current version of [console.py](console.py) allows to use the follwing comm
 * `def reload(self)` -  deserializes the JSON file to __objects
 ## Examples:  
 ...
+$ /AirBnB_clone# ./console.py 
+(hbnb) help
 
-...
+Documented commands (type help <topic>):
+========================================
+EOF  all  create  destroy  help  quit  show
+
+(hbnb) create BaseModel
+beb7c7e0-9848-4025-9051-03b004192077
+(hbnb) show BaseModel beb7c7e0-9848-4025-9051-03b004192077
+[BaseModel] (beb7c7e0-9848-4025-9051-03b004192077) {'id': 'beb7c7e0-9848-4025-9051-03b004192077', 'created_at': datetime.datetime(2021, 6, 30, 16, 8, 7, 925044), 'updated_at': datetime.datetime(2021, 6, 30, 16, 8, 7, 925044)}
+(hbnb) 
+(hbnb) destroy BaseModel beb7c7e0-9848-4025-9051-03b004192077
+(hbnb) show BaseModel beb7c7e0-9848-4025-9051-03b004192077
+** no instance found **
+(hbnb) quit
+...  
 ---  
 
 ## Bugs:  
