@@ -56,7 +56,7 @@ This current version of [console.py](console.py) allows to use the follwing comm
 * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
 * `def reload(self)` -  deserializes the JSON file to __objects
 ## Examples:  
-...  
+```cmd
 $ /AirBnB_clone# ./console.py   
 (hbnb) help  
   
@@ -72,7 +72,7 @@ beb7c7e0-9848-4025-9051-03b004192077
 (hbnb) show BaseModel beb7c7e0-9848-4025-9051-03b004192077  
 ** no instance found **  
 (hbnb) quit  
-...  
+```  
 ---  
 
 ## Bugs:  
