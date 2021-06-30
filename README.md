@@ -36,10 +36,10 @@ This current version of [console.py](console.py) allows to use the follwing comm
 ### `models/` this folder contains all the classes for this project:  
 [base_model.py](/models/base_model.py) - This is the base model class and other classes inherit from it.  
 #### Methods:  
-- `def __init__(self, *args, **kwargs)`  
-- `def __str__(self)`  
-- `def save(self)`  
-- `def to_dict(self)`  
+- `def __init__(self, *args, **kwargs)` - Constructor of the BaseModel.  
+- `def __str__(self)` - Prints the string representation of the class.  
+- `def save(self)` - Updates de attribute `updated_at` with the ongoing time.
+- `def to_dict(self)` - Returns a dictionary with all the instances.  
 #### Aditional classes:  
 (All this classes inherit from BaseModel)  
 * [amenity.py](/models/amenity.py)  
@@ -49,10 +49,16 @@ This current version of [console.py](console.py) allows to use the follwing comm
 * [state.py](/models/state.py)  
 * [user.py](/models/user.py)  
 ### `models/engine` the file storage is contain in this folder, also the serialization and deserialization of the JSON files:  
-[file_storage.py](/models/engine/file_storage.py) - erializes and deserializes 
-### `test/:`
-
+[file_storage.py](/models/engine/file_storage.py) - Serializes and deserializes instanses to and form JSON objects.
+#### Methods:  
+* `def all(self)` - returns the dictionary __objects
+* `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
+* `def save(self)` - serializes __objects to the JSON file (path: __file_path)
+* `def reload(self)` -  deserializes the JSON file to __objects
 ## Examples:  
+...
+
+...
 ---  
 
 ## Bugs:  
