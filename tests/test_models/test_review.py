@@ -1,67 +1,111 @@
 #!/usr/bin/python3
-"""Unit test for the module Review"""
+"""
+Contains the TestReviewDocs classes
+"""
 
+from datetime import datetime
+import inspect
+from models import review
+from models.base_model import BaseModel
+import pep8
 import unittest
-from models.review import Review
-from models import storage
+Review = review.Review
 
 
-class TestingReview(unittest.TestCase):
-    """ Testing for the class Review """
+class TestReviewDocs(unittest.TestCase):
+    """Tests to check the documentation and style of Review class"""
+    @classmethod
+    def setUpClass(cls):
+        """Set up for the doc tests"""
+        cls.review_f = inspect.getmembers(Review, inspect.isfunction)
 
-    def testing_Review_init(self):
-        """ Testing for the method __init__ """
-        obj = Review()
-        obj_name = 'Review.' + obj.id
-        new_dict = storage.all()
-        class_Review = "<class 'models.review.Review'>"
-        class_datetime = "<class 'datetime.datetime'>"
+    def test_pep8_conformance_review(self):
+        """Test that models/review.py conforms to PEP8."""
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['models/review.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-        self.assertEqual(str(type(obj)), class_Review)
-        self.assertEqual(str(type(obj.created_at)), class_datetime)
-        self.assertEqual(str(type(obj.updated_at)), class_datetime)
+    def test_pep8_conformance_test_review(self):
+        """Test that tests/test_models/test_review.py conforms to PEP8."""
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['tests/test_models/test_review.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-        key = new_dict.get(obj_name).to_dict()
-        self.assertIn(obj_name, new_dict.keys())
-        self.assertIn("id", key.keys())
-        self.assertIn("created_at", key.keys())
-        self.assertIn("updated_at", key.keys())
-        self.assertIn("place_id", key.keys())
-        self.assertIn("user_id", key.keys())
-        self.assertIn("text", key.keys())
+    def test_review_module_docstring(self):
+        """Test for the review.py module docstring"""
+        self.assertIsNot(review.__doc__, None,
+                         "review.py needs a docstring")
+        self.assertTrue(len(review.__doc__) >= 1,
+                        "review.py needs a docstring")
 
-        obj.place_id = ""
-        obj.user_id = ""
-        obj.text = ""
-        self.assertEqual(key.get("place_id"), "")
-        self.assertEqual(key.get("user_id"), "")
-        self.assertEqual(key.get("text"), "")
+    def test_review_class_docstring(self):
+        """Test for the Review class docstring"""
+        self.assertIsNot(Review.__doc__, None,
+                         "Review class needs a docstring")
+        self.assertTrue(len(Review.__doc__) >= 1,
+                        "Review class needs a docstring")
 
-    def testing_Review_str(self):
-        """ Testing for the method __str__ """
-        obj = Review()
-        obj_string = '[Review] ({}) {}'.format(obj.id, obj.__dict__)
-        new_string = obj.__str__()
-        self.assertEqual(obj_string, new_string)
-
-    def testing_Review_save(self):
-        """ Testing for the method save """
-        obj = Review()
-        obj_name = 'Review.' + obj.id
-        new_dict = storage.all()
-        first_update = obj.updated_at
-        obj.save()
-        second_update = obj.updated_at
-        self.assertIn(obj_name, new_dict.keys())
-        self.assertNotEqual(first_update, second_update)
-
-    def testing_Review_to_dict(self):
-        """ Testing for the method to_dict """
-        obj = Review()
-        obj_name = 'Review.' + obj.id
-        new_dict = storage.all()
-        self.assertIn(obj_name, new_dict.keys())
+    def test_review_func_docstrings(self):
+        """Test for the presence of docstrings in Review methods"""
+        for func in self.review_f:
+            self.assertIsNot(func[1].__doc__, None,
+                             "{:s} method needs a docstring".format(func[0]))
+            self.assertTrue(len(func[1].__doc__) >= 1,
+                            "{:s} method needs a docstring".format(func[0]))
 
 
-if __name__ == '__main__':
-    unittest.main()
+class TestReview(unittest.TestCase):
+    """Test the Review class"""
+    def test_is_subclass(self):
+        """Test if Review is a subclass of BaseModel"""
+        review = Review()
+        self.assertIsInstance(review, BaseModel)
+        self.assertTrue(hasattr(review, "id"))
+        self.assertTrue(hasattr(review, "created_at"))
+        self.assertTrue(hasattr(review, "updated_at"))
+
+    def test_place_id_attr(self):
+        """Test Review has attr place_id, and it's an empty string"""
+        review = Review()
+        self.assertTrue(hasattr(review, "place_id"))
+        self.assertEqual(review.place_id, "")
+
+    def test_user_id_attr(self):
+        """Test Review has attr user_id, and it's an empty string"""
+        review = Review()
+        self.assertTrue(hasattr(review, "user_id"))
+        self.assertEqual(review.user_id, "")
+
+    def test_text_attr(self):
+        """Test Review has attr text, and it's an empty string"""
+        review = Review()
+        self.assertTrue(hasattr(review, "text"))
+        self.assertEqual(review.text, "")
+
+    def test_to_dict_creates_dict(self):
+        """test to_dict method creates a dictionary with proper attrs"""
+        r = Review()
+        new_d = r.to_dict()
+        self.assertEqual(type(new_d), dict)
+        for attr in r.__dict__:
+            self.assertTrue(attr in new_d)
+            self.assertTrue("__class__" in new_d)
+
+    def test_to_dict_values(self):
+        """test that values in dict returned from to_dict are correct"""
+        t_format = "%Y-%m-%dT%H:%M:%S.%f"
+        r = Review()
+        new_d = r.to_dict()
+        self.assertEqual(new_d["__class__"], "Review")
+        self.assertEqual(type(new_d["created_at"]), str)
+        self.assertEqual(type(new_d["updated_at"]), str)
+        self.assertEqual(new_d["created_at"], r.created_at.strftime(t_format))
+        self.assertEqual(new_d["updated_at"], r.updated_at.strftime(t_format))
+
+    def test_str(self):
+        """test that the str method has the correct output"""
+        review = Review()
+        string = "[Review] ({}) {}".format(review.id, review.__dict__)
+        self.assertEqual(string, str(review))
