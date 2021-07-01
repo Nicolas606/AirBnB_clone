@@ -5,6 +5,7 @@ Module containing the class City
 
 from models.base_model import BaseModel
 
+
 class City(BaseModel):
     """City representation"""
 
