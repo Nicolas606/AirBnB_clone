@@ -12,12 +12,20 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-class_dict = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+class_dict = {
+    "Amenity": Amenity,
+    "BaseModel": BaseModel,
+    "City": City,
+    "Place": Place,
+    "Review": Review,
+    "State": State,
+    "User": User
+    }
+
 
 class FileStorage:
     """Serializes and deserializes instances to/from JSON"""
-    #string - path to the JSON file
+    # String - path to the JSON file
     __file_path = "file.json"
     # Dictionary - empty but will store all objects by <class name>.id
     __objects = {}
@@ -29,7 +37,7 @@ class FileStorage:
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
-            key = obj.__class__.__name__+ "." + obj.id
+            key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
 
     def save(self):
@@ -46,6 +54,8 @@ class FileStorage:
             with open(self.__file_path, "r") as f:
                 objson = json.load(f)
             for obj in objson:
-                self.__objects[obj] = class_dict[objson[obj]["__class__"]](**objson[obj])
+                self.__objects[obj] = class_dict[
+                    objson[obj]["__class__"]
+                    ](**objson[obj])
         except:
             pass
