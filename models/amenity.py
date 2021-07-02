@@ -7,7 +7,10 @@ from models.base_model import BaseModel
 
 
 class Amenity(BaseModel):
-    """Amenity representation"""
+    """Amenity class
+        Public class attributes:
+            - name: string - empty string
+    """
 
     name = ""
 
