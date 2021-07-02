@@ -89,6 +89,7 @@ class HBNBCommand(cmd.Cmd):
         instodel = shlex.split(insinfo)
         if len(instodel) == 0:
             print("** class name missing **")
+            return False
         if instodel[0] in class_dict:
             if len(instodel) > 1:
                 instopop = instodel[0] + "." + instodel[1]
